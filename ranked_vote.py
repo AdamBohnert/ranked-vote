@@ -7,7 +7,7 @@ class Poll:
         self.choices = choices
         self.title = title
         self.expires = True if user_level <= 1 else False
-        #self.expireDate = datetime.datetime.now() + datetime.timedelta(days=7.0)
+        #self.expire_date = datetime.datetime.now() + datetime.timedelta(days=7.0)
 
     # Find maximum votes
     def calc_winner(self):
@@ -20,6 +20,16 @@ class Poll:
         
         return max_keys
         
+    # Store poll
+    def save_poll(self):
+        pass
+
+    # Remove poll
+    def del_poll(self):
+        pass
+
+    def __str__(self):
+        return f"{self.title}: {[k for k in self.choices.keys()]}"
 
 
 class RankedPoll(Poll):
@@ -28,6 +38,7 @@ class RankedPoll(Poll):
 
 
 # testing
-p = Poll({"Adam":11, "Katie":25, "Dustin":11})
+p = RankedPoll({"Adam":11, "Katie":25, "Dustin":11}, title="Friends")
 
 print(p.calc_winner())
+print(p)
