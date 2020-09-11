@@ -1,4 +1,5 @@
 # !python3
+# Copyright 2020 Adam Bohnert
 
 import datetime
 
