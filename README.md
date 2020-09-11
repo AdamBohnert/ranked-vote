@@ -25,5 +25,5 @@ When voting duration is up we total the (1) responses. If this number is 51% or 
 
 [Video demonstration](https://www.youtube.com/watch?v=oHRPMJmzBBw)
 
-### Licence
+### License
 Copyright 2020 Adam Bohnert
