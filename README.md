@@ -24,3 +24,6 @@ Voting users number the options with their top preference as (1), the next is (2
 When voting duration is up we total the (1) responses. If this number is 51% or greater of the number of votes cast, (1) is the winner. Otherwise, remove the choice with the lowest total from this round and add those voter's (2) choice to the totals. Repeat for each least popular option until a majority is found.
 
 [Video demonstration](https://www.youtube.com/watch?v=oHRPMJmzBBw)
+
+### Licence
+Copyright 2020 Adam Bohnert
