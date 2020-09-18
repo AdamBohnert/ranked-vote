@@ -1,6 +1,6 @@
 # !python3
 
-import datetime
+# import datetime
 
 class Poll:
     def __init__(self, choices, title="Untitled Poll", user_level=0):
@@ -58,11 +58,3 @@ class RankedPoll(Poll):
                 min_keys.update({k: v})
         
         return min_keys
-
-
-# testing
-p = RankedPoll({"Adam":30, "Katie":12, "Dustin":11}, title="Friends")
-
-print(p.calc_winner())
-print(p.calc_ranked_winner())
-print(p.calc_loser())
