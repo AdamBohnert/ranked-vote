@@ -3,6 +3,7 @@
 
 import datetime
 
+
 class Poll:
     def __init__(self, choices, title="Untitled Poll", user_level=0):
         self.choices = choices
@@ -13,14 +14,14 @@ class Poll:
     # Find maximum votes
     def calc_winner(self):
         high_val = max(self.choices.items(), key=lambda x: x[1])
-        
+
         max_keys = {}
         for k, v in self.choices.items():
             if v == high_val[1]:
                 max_keys.update({k: v})
-        
+
         return max_keys
-        
+
     # Store poll
     def save_poll(self):
         pass
@@ -39,7 +40,7 @@ class RankedPoll(Poll):
 
 
 # testing
-p = RankedPoll({"Adam":11, "Katie":25, "Dustin":11}, title="Friends")
+p = RankedPoll({"Adam": 11, "Katie": 25, "Dustin": 11}, title="Friends")
 
 print(p.calc_winner())
 print(p)
