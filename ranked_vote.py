@@ -44,7 +44,8 @@ class RankedPoll(Poll):
         while top_vote[0][1] / num_votes <= 0.51:
             # Otherwise drop the choice with lowest votes
             for k, _ in self.calc_loser().items():
-                # TODO: Get these users' next best choices - needs stored by user
+                # TODO: Get these users' next best choices - needs stored by
+                # user
                 choices_copy.pop(k)
             # TODO: Add their next choice to be compared
             break
