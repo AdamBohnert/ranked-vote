@@ -1,7 +1,5 @@
-# !python3
-# Copyright 2020 Adam Bohnert
-
-import datetime
+#! python3
+# ranked_vote.py contains poll functionality
 
 
 class Poll:
@@ -9,7 +7,7 @@ class Poll:
         self.choices = choices
         self.title = title
         self.expires = True if user_level <= 1 else False
-        #self.expire_date = datetime.datetime.now() + datetime.timedelta(days=7.0)
+        # TODO: Add expiration date by user level and as an option at creation
 
     # Find maximum votes
     def calc_winner(self):
@@ -35,12 +33,31 @@ class Poll:
 
 
 class RankedPoll(Poll):
-    def calc_winner(self):
-        pass
 
+    # Total first-place choices
+    def calc_ranked_winner(self):
+        choices_copy = self.choices.copy()
+        top_vote = list(self.calc_winner().items())
+        num_votes = sum(self.choices.values())
 
-# testing
-p = RankedPoll({"Adam": 11, "Katie": 25, "Dustin": 11}, title="Friends")
+        # If the top choice has 51% or more of total votes, it wins
+        while top_vote[0][1] / num_votes <= 0.51:
+            # Otherwise drop the choice with lowest votes
+            for k, _ in self.calc_loser().items():
+                # TODO: Get these users' next best choices - needs stored by
+                # user
+                choices_copy.pop(k)
+            # TODO: Add their next choice to be compared
+            break
+        return top_vote
 
-print(p.calc_winner())
-print(p)
+    # Finds lowest number of votes
+    def calc_loser(self):
+        low_val = min(self.choices.items(), key=lambda x: x[1])
+
+        min_keys = {}
+        for k, v in self.choices.items():
+            if v == low_val[1]:
+                min_keys.update({k: v})
+
+        return min_keys
