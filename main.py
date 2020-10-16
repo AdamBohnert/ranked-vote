@@ -1,7 +1,8 @@
+# Currently just for testing
+
 from ranked_vote import RankedPoll
 from user import User
 
-# testing
 
 data = {"Adam":30, "Katie":12, "Dustin":11}
 
