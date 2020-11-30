@@ -1,31 +1,31 @@
-#! python3
-# ranked_vote.py contains poll functionality
+# python3
+# contains poll functionality
 
 
 class Poll:
-    def __init__(self, choices, title="Untitled Poll", user_level=0):
-        self.choices = choices
-        self.title = title
-        self.expires = True if user_level <= 1 else False
+    def __init__(self, choices, title="Untitled Poll"):
+        self.choices = {}
+        for choice in choices:
+            self.choices[choice] = 0
+
+        self.title = str(title)
         # TODO: Add expiration date by user level and as an option at creation
 
+
     # Find maximum votes
-    def calc_winner(self):
-        high_val = max(self.choices.items(), key=lambda x: x[1])
-
-        max_keys = {}
-        for k, v in self.choices.items():
-            if v == high_val[1]:
-                max_keys.update({k: v})
-
-        return max_keys
+    def calc_winner(self, voters):
+        for voter in voters:
+            for k, v in voter.rankings.items():
+                if k in self.choices:
+                    self.choices[k] += v
+        return max(self.choices.items(), key=lambda x: x[1])
 
     # Store poll
-    def save_poll(self):
+    def save(self):
         pass
 
     # Remove poll
-    def del_poll(self):
+    def delete(self):
         pass
 
     def __str__(self):

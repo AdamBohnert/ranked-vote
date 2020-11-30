@@ -1,26 +1,18 @@
 # Currently just for testing
 
-from ranked_vote import RankedPoll
+from poll import Poll, RankedPoll
 from user import User
 
+choices = ["Adam", "Katie", "Mom"]
 
-data = {"Adam": 30, "Katie": 12, "Dustin": 11}
+adam = User()
+adam.vote({"Adam":1, "Katie":0, "Mom":0})
 
+katie = User()
+katie.vote({"Adam":0, "Katie":2, "Mom":0})
 
-u = User(1)
-u.rank(data)
+voters = [adam, katie]
 
-u2 = User(2)
-u2.rank({"Dustin": 30, "Adam": 11, "Katie": 5})
+p = Poll(choices, title="Friends")
 
-options = [u.rankings, u2.rankings]
-for option in options:
-    print(option)
-
-
-p = RankedPoll(options, title="Friends") # TODO: Poll should hold possible options 
-#instead of take input to be calculated
-
-print(p.calc_winner())
-print(p.calc_ranked_winner())
-print(p.calc_loser())
+print("winner", p.calc_winner(voters))
