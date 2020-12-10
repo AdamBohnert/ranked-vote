@@ -33,23 +33,49 @@ class Poll:
 
 
 class RankedPoll(Poll):
+    def __init__(self, choices, title):
+        super().__init__(choices, title=title)
+        self.num_chices = len(self.choices.keys())
 
     # Total first-place choices
-    def calc_ranked_winner(self):
-        choices_copy = self.choices.copy()
-        top_vote = list(self.calc_winner().items())
-        num_votes = sum(self.choices.values())
+    def calc_winner(self, voters):
+        round = 1
+        pct = 0.0
+        cur_losers = []
 
-        # If the top choice has 51% or more of total votes, it wins
-        while top_vote[0][1] / num_votes <= 0.51:
-            # Otherwise drop the choice with lowest votes
-            for k, _ in self.calc_loser().items():
-                # TODO: Get these users' next best choices - needs stored by
-                # user
-                choices_copy.pop(k)
-            # TODO: Add their next choice to be compared
-            break
-        return top_vote
+        while pct < 0.51:  # No winner
+            for voter in voters:
+                if round == 1:
+                    for k, rank in voter.rankings.items():
+                        if k in self.choices and rank == round:
+                            self.choices[k] += 1
+                else:
+                    for k, rank in voter.rankings.items():
+                        if k in self.choices and rank == round and voter in cur_losers:
+                            self.choices[k] += 1
+            
+            # reset losers
+            cur_losers = []
+
+            # recalculate win percentage
+            s = sum(self.choices.values())
+            for k, v in self.choices.items():
+                pct = v * 100.0 / s
+                print(k, pct)
+            print("\n")
+
+            # drop loser
+            losers = self.calc_loser()
+            for loser in losers:
+                for voter in voters:
+                    voter.remove(loser)
+                    cur_losers.append(voter)
+            
+            # add loser's next best choice
+
+            round += 1
+
+        return max(self.choices.items(), key=lambda x: x[1])
 
     # Finds lowest number of votes
     def calc_loser(self):
