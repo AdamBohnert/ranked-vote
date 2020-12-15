@@ -41,41 +41,43 @@ class RankedPoll(Poll):
     def calc_winner(self, voters):
         round = 1
         pct = 0.0
-        cur_losers = []
+        eliminated = []
 
         while pct < 0.51:  # No winner
-            for voter in voters:
-                if round == 1:
+            if round == 1:
+                for voter in voters:
                     for k, rank in voter.rankings.items():
                         if k in self.choices and rank == round:
                             self.choices[k] += 1
-                else:
-                    for k, rank in voter.rankings.items():
-                        if k in self.choices and rank == round and voter in cur_losers:
-                            self.choices[k] += 1
-            
-            # reset losers
-            cur_losers = []
 
             # recalculate win percentage
             s = sum(self.choices.values())
             for k, v in self.choices.items():
                 pct = v * 100.0 / s
-                print(k, pct)
-            print("\n")
+                print(k, pct, "%")
 
             # drop loser
             losers = self.calc_loser()
             for loser in losers:
-                for voter in voters:
-                    voter.remove(loser)
-                    cur_losers.append(voter)
+                self.choices.pop(loser)
+                eliminated.append(loser)
+                print(loser, "removed.")
             
+            # remove preferential votes for loser
             # add loser's next best choice
+            for voter in voters:
+                for k, rank in voter.rankings.items():
+                    if rank == round and k in eliminated and k in self.choices:
+                        self.choices[k] -= 1
+                    if rank == round + 1 and k not in eliminated:
+                        self.choices[k] += 1
 
             round += 1
 
-        return max(self.choices.items(), key=lambda x: x[1])
+        winner = max(self.choices.items(), key=lambda x: x[1])
+        print(winner, "won in", round, "rounds.")
+
+        return winner
 
     # Finds lowest number of votes
     def calc_loser(self):
