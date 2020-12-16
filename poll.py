@@ -11,8 +11,8 @@ class Poll:
         self.title = str(title)
         # TODO: Add expiration date by user level and as an option at creation
 
-
     # Find maximum votes
+
     def calc_winner(self, voters):
         for voter in voters:
             for k, v in voter.rankings.items():
@@ -62,7 +62,7 @@ class RankedPoll(Poll):
                 self.choices.pop(loser)
                 eliminated.append(loser)
                 print(loser, "removed.")
-            
+
             # remove preferential votes for loser
             # add loser's next best choice
             for voter in voters:
