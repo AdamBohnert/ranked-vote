@@ -1,17 +1,17 @@
 # Contains user information and queue of ranked choices
 
-from collections import deque
-
-
 class User:
-    def __init__(self, id):
-        self.id = id
+    def __init__(self):
+        # TODO: Add unique identifier from database
         self.rankings = None
 
+        # TODO: Store user in database
+
     # sort rankings
-    def rank(self, choices):
+    def vote(self, choices):
         self.rankings = {k: v for k, v in sorted(
             choices.items(), key=lambda item: item[1])}
 
-    def to_queue(self):
-        return deque(self.rankings)
+    # remove choice
+    def remove(self, key):
+        return self.rankings.pop(key, None)
