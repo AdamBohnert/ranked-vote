@@ -1,7 +1,7 @@
 # Ranked Vote
 
 ## Goals:
-- [ ] Implement ranked voting
+- [X] Implement ranked voting
 - [ ] Store poll, accessible via unique url probably
 - [ ] Allow voting for a selected period of time
 - [ ] Remove poll from storage after awhile
@@ -26,6 +26,3 @@ When voting duration is up we total the (1) responses. If this number is 51% or 
 [Video demonstration](https://www.youtube.com/watch?v=oHRPMJmzBBw)
 
 [Wiki explanation](https://ballotpedia.org/Ranked-choice_voting_(RCV))
-
-### License
-Copyright 2020 Adam Bohnert
